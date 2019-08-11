@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{ globalVar.lang.devices }}
+    </ion-title>
+    <button ion-button right menuToggle>
+      <ion-icon name="search" ></ion-icon>
+    </button>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card *ngFor="let item of globalVar.aryDevices" >
+    <ion-list>
+
+      <ion-item>
+        <ion-label color="primary" >{{ globalVar.lang.sn }} </ion-label>
+        <ion-input type="text" readonly [(ngModel)]="item.sn" ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary" >{{ globalVar.lang.name }}</ion-label>
+        <ion-input type="text" [(ngModel)]="item.name" ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary" >{{ globalVar.lang.mac }}</ion-label>
+        <ion-input type="text" [(ngModel)]="item.mac" ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary" >{{ globalVar.lang.saveRate }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-badge item-end>{{getSaveRateDispaly(item.saveRate)}}</ion-badge>
+        <ion-range min="1" max="9" step="1" snaps="true" [(ngModel)]="item.saveRate" >
+          <ion-icon range-left small color="primary" name="arrow-back"></ion-icon>
+          <ion-icon range-right color="primary" name="arrow-forward"></ion-icon>
+        </ion-range>
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary" >{{ globalVar.lang.savePath }}</ion-label>
+        <ion-input type="text" [(ngModel)]="item.savePath" readonly></ion-input>
+      </ion-item>
+      
+      <ion-row>
+        <ion-col>
+          <button ion-button full item-start (click)="saveDevice( item.sn )" >{{ globalVar.lang.save }}</button>
+        </ion-col>
+        <ion-col>
+          <button ion-button color="light" full item-end (click)="showDeleteConfirm( item.sn, item.name )">{{ globalVar.lang.delete }}</button>
+        </ion-col>
+      </ion-row>
+
+    </ion-list>   
+  </ion-card>
+
+  <button ion-button outline item-end icon-start (click)="showAddDialog()" *ngIf="globalVar.groupFilterId > 0" >
+    <ion-icon name="add" outline></ion-icon>
+    {{ globalVar.lang.add_new_device }}
+  </button>
+
+</ion-content>

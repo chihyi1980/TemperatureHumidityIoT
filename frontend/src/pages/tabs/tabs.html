@@ -1,0 +1,5 @@
+<ion-tabs>
+  <ion-tab [root]="tab1Root" tabTitle="{{ globalVar.lang.status }}" tabIcon="ios-thermometer"></ion-tab>
+  <ion-tab [root]="tab2Root" tabTitle="{{ globalVar.lang.devices }}" tabIcon="ios-calculator" *ngIf="isAdminUser()" ></ion-tab>
+  <ion-tab [root]="tab3Root" tabTitle="{{ globalVar.lang.accounts }}" tabIcon="contacts"></ion-tab>
+</ion-tabs>

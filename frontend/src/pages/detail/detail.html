@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{ globalVar.lang.detail }}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card >
+    <ion-card-header>
+      {{ currDev.sn }} - {{ currDev.name }}
+    </ion-card-header>
+
+    <ion-item>
+      <ion-label color="primary" >{{ globalVar.lang.chart }}</ion-label>
+    </ion-item>
+    <div style="width:75%;">
+      <canvas id="myChart"></canvas>
+    </div>
+
+    <ion-item>
+      <ion-label color="primary" >{{ globalVar.lang.logs }}</ion-label>
+    </ion-item>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col >{{ globalVar.lang.date}}</ion-col>
+          <ion-col >{{ globalVar.lang.time }}</ion-col>
+          <ion-col >{{ globalVar.lang.temperature }}</ion-col>
+          <ion-col >{{ globalVar.lang.humidity }}</ion-col>
+        </ion-row>
+
+        <ion-row *ngFor="let item of logs">
+          <ion-col > {{ item.date }}  </ion-col>
+          <ion-col > {{ item.time }}  </ion-col>
+          <ion-col > {{ item.temperature }} °C  </ion-col>
+          <ion-col >  {{ item.humidity }} ％  </ion-col>
+        </ion-row>
+
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

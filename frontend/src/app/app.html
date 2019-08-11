@@ -1,0 +1,23 @@
+  <ion-menu [content]="content" side="right">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{ globalVar.lang.area }} > {{ globalVar.lang.group }}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-searchbar (ionInput)="updateGroupsByKey($event)" placeholder="{{ globalVar.lang.search }}" ></ion-searchbar>
+      <ion-list>
+        
+        <ion-item *ngFor="let item of globalVar.groups" (click)="selectGroup( item )" >
+          <ion-icon ios="ios-add-circle" md="md-add-circle" *ngIf="item.addArea" float-left (click)="showAddAreaDialog()" ></ion-icon>
+          <ion-icon ios="ios-arrow-round-forward" md="md-arrow-round-forward" *ngIf="item.isGroup" padding-left></ion-icon>
+          <ion-icon ios="ios-add-circle-outline" md="md-add-circle" *ngIf="item.addGroup" (click)="showAddGroupDialog( item.areaSn )"></ion-icon>
+          {{item.name}} 
+          <ion-icon ios="ios-trash" md="md-trash" float-right (click)="delAreaGroup( item )" *ngIf="item.isDel" ></ion-icon>
+        </ion-item>
+
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-nav [root]="rootPage" #content></ion-nav>

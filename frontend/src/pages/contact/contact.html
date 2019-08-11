@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{ globalVar.lang.accounts }}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card *ngFor="let item of aryUsers" >
+    <ion-list >
+
+      <ion-item>
+        <ion-label color="primary" >{{ globalVar.lang.id }} </ion-label>
+        <ion-input type="text" [(ngModel)]="item.username" readonly></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary" >{{ globalVar.lang.password }}</ion-label>
+        <ion-input type="password" [(ngModel)]="item.password" [readonly]="!isUserOrAdmin( item.username )"  ></ion-input>
+      </ion-item>
+
+      <ion-row>
+        <ion-col>
+          <button ion-button full item-start (click)="saveUser( item.sn, item.username, item.password )" *ngIf="isUserOrAdmin( item.username )" >{{ globalVar.lang.save }}</button>
+        </ion-col>
+        <ion-col>
+          <button ion-button color="light" full item-end (click)="showDeleteConfirm( item.sn, item.username )" *ngIf="isUserOrAdmin( item.username )" >{{ globalVar.lang.delete }}</button>
+        </ion-col>
+      </ion-row>
+
+    </ion-list>   
+  </ion-card>
+
+  <button ion-button outline item-end icon-start (click)="showAddDialog()" *ngIf="isAdmin()" >
+    <ion-icon name="add" outline></ion-icon>
+    {{ globalVar.lang.add_new_user }}
+  </button>

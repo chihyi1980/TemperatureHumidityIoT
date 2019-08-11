@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ globalVar.lang.status }}</ion-title>
+    <button ion-button right menuToggle>
+      <ion-icon name="search"></ion-icon>
+    </button>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-card *ngFor="let item of aryCurrStatus" (click)="openDetail( { 'sn':item.sn, 'name': item.name } )" >
+    <ion-card-header>
+      <h2>{{ item.sn }} - {{ item.name }}</h2>
+      <p style="color: gray">
+        {{ globalVar.findAreaGroupName(item.areaId) }} > {{ globalVar.findAreaGroupName(item.groupId) }}
+      </p>
+    </ion-card-header>
+    <ion-card-content>
+    <ion-row>
+      <ion-col>
+        <ion-icon name="ios-thermometer-outline" item-start></ion-icon> {{ item.temperature }} °C
+      </ion-col>
+      <ion-col>
+        <ion-icon name="ios-water-outline" item-start></ion-icon> {{ item.humidity }} ％
+      </ion-col>
+    </ion-row>      
+    </ion-card-content>
+  </ion-card>    
+</ion-content>
+

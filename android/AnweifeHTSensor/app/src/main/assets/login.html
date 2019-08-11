@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Anweife</title>
+    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
+
+    <!-- add to homescreen for ios -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <style>
+    </style>
+
+    <script>
+    function login()
+    {
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+        var domMsg = document.getElementById('msg');
+
+        if(username == null || username =='')
+        {
+            domMsg.innerHTML = 'User Name can\'t be empty';
+
+        }else if(password == null || password =='')
+        {
+            domMsg.innerHTML = 'Password can\'t be empty';
+        }else
+        {
+            var USERS_LIST_Tag = 'USERS_LIST';
+            var CURR_USER = 'CURR_USER';
+            var aryUsersStr = AndroidObj.getDB(USERS_LIST_Tag);
+            var aryUsers = JSON.parse(aryUsersStr);
+
+            if(aryUsers)
+            {
+                var user = null;
+                for(var i = 0 ; i < aryUsers.length; i++)
+                {
+                    if(aryUsers[i].username == username)
+                    {
+                        user = aryUsers[i].username;
+                        if(aryUsers[i].password == password)
+                        {
+                            AndroidObj.putDB('CURR_USER',  username);
+                            domMsg.innerHTML = username + ' login....';
+                            var lang = document.getElementById('lang').value;
+                            console.log(lang);
+                            AndroidObj.putDB('LANG', lang );
+                            window.location.href = 'index.html';
+                        }else
+                        {
+                            domMsg.innerHTML = 'password is not correct';
+                        }
+                    }
+                }
+                if(user == null)
+                {
+                    domMsg.innerHTML = 'user name is not correct';
+                }
+            }
+        }
+    }
+
+    function changeLag()
+    {
+        var lang = document.getElementById('lang').value;
+        var domUsernameText = document.getElementById('usernameText');
+        var domPasswordText = document.getElementById('passwordText');
+        var domLoginButton = document.getElementById('loginButton');
+        if(lang == 'lang_tw')
+        {
+            domUsernameText.innerHTML = '帳號';
+            domPasswordText.innerHTML = '密碼';
+            domLoginButton.value = '登入';
+        }else if(lang == 'lang_cn')
+        {
+            domUsernameText.innerHTML = '用户名';
+            domPasswordText.innerHTML = '密码';
+            domLoginButton.value = '登录';
+        }else if(lang == 'lang_en')
+        {
+            domUsernameText.innerHTML = 'User Name';
+            domPasswordText.innerHTML = 'Password';
+            domLoginButton.value = 'Login';
+        }
+    }
+
+    </script>
+</head>
+<body bgcolor="#EEEEEE">
+    <center>
+        <p></p>
+        <div >
+            <img src="assets/imgs/anweife_logo.png"  style="width: 500px" />
+        </div>
+        <p></p>
+        <div>
+            <select id="lang" onchange="changeLag()">
+                <option value="lang_tw">繁體中文</option>
+                <option value="lang_cn">简体中文</option>
+                <option value="lang_en">English</option>
+            </select>
+        </div>
+        <p></p>
+        <div>
+            <span id="usernameText">帳號</span>: <input type="text" id="username" />
+        </div>
+        <p></p>
+        <br />
+        <div>
+            <span id="passwordText">密碼</span>: <input type="password" id="password"/>
+        </div>
+        <br />
+        <div>
+            <input type="button" value="登入" onclick="login()" id="loginButton" />
+        </div>
+        <p></p>
+        <div id="msg" style="color: red"></div>
+    </center>
+
+</body>
+
+</html>
